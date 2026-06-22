@@ -85,12 +85,12 @@ Teoricamente:
 
 => 0.166 g Zn / g Au
 
-En planta se utilizan excesos de 2x a 20x debido a:
-- oxigeno residual
-- impurezas
-- plata
-- cobre
-- pasivacion
+#En planta se utilizan excesos de 2x a 20x debido a:
+#- oxigeno residual
+#- impurezas
+#- plata
+#- cobre
+#- pasivacion
 
 Factor operacional sugerido:
 Zn_real = Zn_teorico * factor_operacional
