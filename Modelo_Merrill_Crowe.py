@@ -83,7 +83,7 @@ print(reaccion)
 #65.38 g Zn precipitan
 #393.94 g Au
 
-=> 0.166 g Zn / g Au
+#=> 0.166 g Zn / g Au
 
 #En planta se utilizan excesos de 2x a 20x debido a:
 #- oxigeno residual
