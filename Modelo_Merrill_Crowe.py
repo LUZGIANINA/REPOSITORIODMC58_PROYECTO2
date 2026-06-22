@@ -1,8 +1,3 @@
-
-# MODELO PREDICTIVO MERRILL-CROWE
-# Autor: ChatGPT
-# Requiere: pandas, numpy, scikit-learn, statsmodels, scipy, matplotlib, seaborn
-
 import pandas as pd
 import numpy as np
 
