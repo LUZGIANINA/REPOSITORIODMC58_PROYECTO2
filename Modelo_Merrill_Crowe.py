@@ -76,8 +76,8 @@ print(imp)
 reaccion = "2Au(CN)2- + Zn -> 2Au + Zn(CN)4(2-)"
 print(reaccion)
 
-PM Au = 196.97 g/mol
-PM Zn = 65.38 g/mol
+#PM Au = 196.97 g/mol
+#PM Zn = 65.38 g/mol
 
 Teoricamente:
 65.38 g Zn precipitan
