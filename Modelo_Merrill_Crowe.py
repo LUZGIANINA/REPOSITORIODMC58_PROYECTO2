@@ -80,8 +80,8 @@ print(reaccion)
 #PM Zn = 65.38 g/mol
 
 #Teoricamente:
-65.38 g Zn precipitan
-393.94 g Au
+#65.38 g Zn precipitan
+#393.94 g Au
 
 => 0.166 g Zn / g Au
 
