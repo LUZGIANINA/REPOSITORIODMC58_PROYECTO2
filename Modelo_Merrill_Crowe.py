@@ -92,7 +92,7 @@ print(reaccion)
 #- cobre
 #- pasivacion
 
-Factor operacional sugerido:
+#Factor operacional sugerido:
 Zn_real = Zn_teorico * factor_operacional
 
 
