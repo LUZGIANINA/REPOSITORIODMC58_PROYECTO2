@@ -10,31 +10,16 @@ from scipy.stats import shapiro
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 import statsmodels.api as sm
 
-# =========================
-# 1. CARGA DE DATOS
-# =========================
 archivo = "Dataset_Merrill_Crowe_Zinc_Predictivo.xlsx"
 df = pd.read_excel(archivo)
 
 print(df.head())
 print(df.describe())
 
-# =========================
-# 2. VARIABLES
-# =========================
-X = df[[
-    'Pureza_Zinc_pct',
-    'pH',
-    'Oro_mg_L',
-    'Turbidez_NTU',
-    'Oxigeno_Disuelto_mg_L'
-]]
+X = df[['Pureza_Zinc_pct','pH','Oro_mg_L','Turbidez_NTU','Oxigeno_Disuelto_mg_L']]
 
 y = df['Dosis_Zinc_Polvo_g_m3']
 
-# =========================
-# 3. LINEALIDAD Y VIF
-# =========================
 X_const = sm.add_constant(X)
 
 vif = pd.DataFrame()
@@ -48,18 +33,8 @@ print(vif)
 modelo_ols = sm.OLS(y, X_const).fit()
 print(modelo_ols.summary())
 
-# =========================
-# 4. TRAIN TEST
-# =========================
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y,
-    test_size=0.2,
-    random_state=42
-)
+X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.2,random_state=42)
 
-# =========================
-# 5. REGRESION LINEAL
-# =========================
 lr = LinearRegression()
 lr.fit(X_train, y_train)
 
@@ -70,17 +45,8 @@ print("R2 =", r2_score(y_test, pred_lr))
 print("MAE =", mean_absolute_error(y_test, pred_lr))
 print("RMSE =", np.sqrt(mean_squared_error(y_test, pred_lr)))
 
-# =========================
-# 6. RANDOM FOREST
-# =========================
-rf = RandomForestRegressor(
-    n_estimators=300,
-    max_depth=12,
-    random_state=42
-)
-
+rf = RandomForestRegressor(n_estimators=300,max_depth=12,random_state=42)
 rf.fit(X_train, y_train)
-
 pred_rf = rf.predict(X_test)
 
 print("\nRANDOM FOREST")
@@ -88,68 +54,47 @@ print("R2 =", r2_score(y_test, pred_rf))
 print("MAE =", mean_absolute_error(y_test, pred_rf))
 print("RMSE =", np.sqrt(mean_squared_error(y_test, pred_rf)))
 
-scores = cross_val_score(
-    rf,
-    X,
-    y,
-    cv=5,
-    scoring='r2'
-)
+scores = cross_val_score(rf,X,y,cv=5,scoring='r2')
 
 print("\nCross Validation R2")
 print(scores)
 print("Promedio =", scores.mean())
 
-# =========================
-# 7. ANALISIS RESIDUALES
-# =========================
 residuos = y_test - pred_rf
 
 print("\nShapiro-Wilk residuos")
 print(shapiro(residuos))
 
-# =========================
-# 8. IMPORTANCIA VARIABLES
-# =========================
-imp = pd.DataFrame({
-    'Variable': X.columns,
-    'Importancia': rf.feature_importances_
-})
+imp = pd.DataFrame({'Variable': X.columns,'Importancia': rf.feature_importances_})
 
-imp = imp.sort_values(
-    by='Importancia',
-    ascending=False
-)
+imp = imp.sort_values(by='Importancia',ascending=False)
 
 print("\nImportancia Variables")
 print(imp)
 
-# =========================
-# 9. ESTEQUIOMETRIA MERRILL-CROWE
-# =========================
-#
-# 2Au(CN)2- + Zn -> 2Au + Zn(CN)4(2-)
-#
-# PM Au = 196.97 g/mol
-# PM Zn = 65.38 g/mol
-#
-# Teoricamente:
-# 65.38 g Zn precipitan
-# 393.94 g Au
-#
-# => 0.166 g Zn / g Au
-#
-# En planta se utilizan excesos de
-# 2x a 20x debido a:
-# - oxigeno residual
-# - impurezas
-# - plata
-# - cobre
-# - pasivacion
-#
-# Factor operacional sugerido:
-# Zn_real = Zn_teorico * factor_operacional
-#
+
+2Au(CN)2- + Zn -> 2Au + Zn(CN)4(2-)
+
+PM Au = 196.97 g/mol
+PM Zn = 65.38 g/mol
+
+Teoricamente:
+65.38 g Zn precipitan
+393.94 g Au
+
+=> 0.166 g Zn / g Au
+
+En planta se utilizan excesos de
+2x a 20x debido a:
+- oxigeno residual
+- impurezas
+- plata
+- cobre
+- pasivacion
+
+Factor operacional sugerido:
+Zn_real = Zn_teorico * factor_operacional
+
 
 def zinc_teorico(oro_mg_l):
     return oro_mg_l * (65.38 / (2 * 196.97))
