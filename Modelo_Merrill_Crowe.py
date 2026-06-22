@@ -73,7 +73,8 @@ print("\nImportancia Variables")
 print(imp)
 
 
-2Au(CN)2- + Zn -> 2Au + Zn(CN)4(2-)
+reaccion = "2Au(CN)2- + Zn -> 2Au + Zn(CN)4(2-)"
+print(reaccion)
 
 PM Au = 196.97 g/mol
 PM Zn = 65.38 g/mol
